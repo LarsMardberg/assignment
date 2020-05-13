@@ -1,0 +1,19 @@
+version: '3'
+services:
+  database:
+    container_name: database
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "4306:3306"
+    restart: always
+  translator:
+    image: translator
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+        - "database"
